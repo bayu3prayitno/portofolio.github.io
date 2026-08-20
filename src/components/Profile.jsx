@@ -74,9 +74,13 @@ const Profile = () => {
                     {/* Small User Avatar */}
                     <div className="w-8 h-8 rounded-full overflow-hidden border border-white/30 bg-gray-800 flex-shrink-0 shadow-sm">
                       <img 
-                        src="/assets/profile/foto1.png" 
+                        src={getAssetPath("/assets/profile/foto1.png")} 
                         alt="Avatar" 
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = getAssetPath(personalData.image || "/assets/profile/foto.png");
+                        }}
                       />
                     </div>
                     {/* Username & Status */}
