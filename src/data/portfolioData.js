@@ -1,7 +1,7 @@
 // Data portfolio berdasarkan CV
 export const personalData = {
   name: "Bayu Tri Prayitno",
-  title: "Computer Engineering Technology Graduate",
+  title: "Fresh Graduate",
   location: "Indonesia",
   email: "treeprayitno12@gmail.com",
   phone: "+62 857 2504 0030",

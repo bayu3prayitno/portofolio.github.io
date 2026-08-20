@@ -98,58 +98,8 @@ const Home = () => {
   return (
     <section 
       id="home" 
-      className="relative min-h-screen w-full bg-[#050607] text-white flex items-center justify-center overflow-hidden pt-24 pb-16 lg:py-0"
+      className="relative min-h-screen w-full bg-transparent text-white flex items-center justify-center overflow-hidden pt-24 pb-16 lg:py-0"
     >
-      {/* --- TOP-CENTER OVERHEAD SPOTLIGHT BEAM (ACCORDING TO REFERENCE) --- */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute -top-20 sm:-top-28 left-1/2 -translate-x-1/2 w-[540px] sm:w-[680px] lg:w-[820px] h-[750px] sm:h-[900px] z-0"
-      >
-        <svg viewBox="0 0 800 900" className="w-full h-full overflow-visible">
-          <defs>
-            {/* Volumetric Studio Beam Gradient */}
-            <linearGradient id="centerStudioBeamGradient" x1="50%" y1="0%" x2="50%" y2="100%">
-              <stop offset="0%" stopColor="#86efac" stopOpacity="0.38" />
-              <stop offset="18%" stopColor="#4ade80" stopOpacity="0.24" />
-              <stop offset="45%" stopColor="#22c55e" stopOpacity="0.10" />
-              <stop offset="75%" stopColor="#15803d" stopOpacity="0.03" />
-              <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-            </linearGradient>
-
-            {/* Top Ceiling Lamp Source Flare */}
-            <radialGradient id="centerLampGlow" cx="50%" cy="0%" r="55%">
-              <stop offset="0%" stopColor="#bbf7d0" stopOpacity="0.6" />
-              <stop offset="35%" stopColor="#4ade80" stopOpacity="0.22" />
-              <stop offset="75%" stopColor="#166534" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-            </radialGradient>
-
-            {/* Atmospheric Gaussian Blur */}
-            <filter id="centerStudioBlur" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="36" />
-            </filter>
-          </defs>
-
-          {/* Downward Spreading Spotlight Ray Cone */}
-          <polygon
-            points="360,0 440,0 760,900 40,900"
-            fill="url(#centerStudioBeamGradient)"
-            filter="url(#centerStudioBlur)"
-            opacity="0.85"
-          />
-
-          {/* Top Ceiling Light Flare */}
-          <ellipse 
-            cx="400" 
-            cy="0" 
-            rx="150" 
-            ry="55" 
-            fill="url(#centerLampGlow)" 
-            filter="url(#centerStudioBlur)" 
-          />
-        </svg>
-      </div>
-
       <div className="relative z-10 max-w-7xl w-full mx-auto px-6 sm:px-10 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
         
         {/* ================= LEFT COLUMN: HERO CONTENT ================= */}
