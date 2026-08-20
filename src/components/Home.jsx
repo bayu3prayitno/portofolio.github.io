@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { personalData, socialLinks } from '../data/portfolioData';
 import { useLanguage } from '../contexts/LanguageContext';
 import { DecryptedText, KineticText } from './CyberText';
+import { getAssetPath } from '../utils/assetHelper';
 
 // Custom Social Icons matching the reference perfectly
 const InstagramIcon = () => (
@@ -95,7 +96,7 @@ const Home = () => {
 
   const downloadCV = () => {
     const link = document.createElement('a');
-    link.href = personalData.resume || '/CV_ATS.pdf';
+    link.href = getAssetPath(personalData.resume || '/CV_ATS.pdf');
     link.download = 'CV_ATS.pdf';
     link.click();
   };
@@ -320,11 +321,11 @@ const Home = () => {
                     {/* Profile / Character Image */}
                     <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
                       <img
-                        src={personalData.image || "/assets/profile/foto.png"}
+                        src={getAssetPath(personalData.image || "/assets/profile/foto.png")}
                         alt={personalData.name || "Full Stack Developer"}
                         className="w-full h-full object-cover object-top select-none pointer-events-none filter brightness-95 contrast-105"
                         onError={(e) => {
-                          e.target.src = "/assets/profile/cnn.png";
+                          e.target.src = getAssetPath("/assets/profile/cnn.png");
                         }}
                       />
                     </div>

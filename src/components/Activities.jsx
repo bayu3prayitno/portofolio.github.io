@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { activities } from '../data/portfolioData';
 import { useLanguage } from '../contexts/LanguageContext';
 import { CyberHeader } from './CyberText';
+import { getAssetPath } from '../utils/assetHelper';
 
 const Activities = () => {
   const [filter, setFilter] = useState('all');
@@ -120,7 +121,7 @@ const Activities = () => {
                 {/* Image Window */}
                 <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-black/60 mb-3">
                   <img
-                    src={activity.image}
+                    src={getAssetPath(activity.image)}
                     alt={activity.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => {
@@ -196,7 +197,7 @@ const Activities = () => {
 
                 <div className="w-full aspect-[16/10] rounded-xl overflow-hidden bg-black/80">
                   <img
-                    src={activeActivity.image}
+                    src={getAssetPath(activeActivity.image)}
                     alt={activeActivity.title}
                     className="w-full h-full object-cover"
                   />

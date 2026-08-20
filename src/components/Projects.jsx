@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "../data/portfolioData";
 import { useLanguage } from "../contexts/LanguageContext";
 import { CyberHeader } from "./CyberText";
+import { getAssetPath } from "../utils/assetHelper";
 
 const Projects = () => {
   const [selectedProjectId, setSelectedProjectId] = useState(null);
@@ -72,7 +73,7 @@ const Projects = () => {
               {/* Project Image Window */}
               <div className="relative w-full aspect-[16/10] rounded-[16px] overflow-hidden bg-black/90 mb-2">
                 <img
-                  src={project.image}
+                  src={getAssetPath(project.image)}
                   alt={project.title}
                   className="w-full h-full object-cover object-top filter grayscale contrast-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-105 transition-all duration-500"
                   onError={(e) => {
@@ -128,7 +129,7 @@ const Projects = () => {
                 {/* Modal Header Image */}
                 <div className="relative w-full aspect-[16/9] bg-black overflow-hidden flex-shrink-0">
                   <img
-                    src={activeProject.image}
+                    src={getAssetPath(activeProject.image)}
                     alt={activeProject.title}
                     className="w-full h-full object-cover"
                   />

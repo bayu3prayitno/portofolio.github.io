@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { personalData, socialLinks } from "../data/portfolioData";
 import { useLanguage } from "../contexts/LanguageContext";
 import { DecryptedText, KineticText } from "./CyberText";
+import { getAssetPath } from "../utils/assetHelper";
 
 const Profile = () => {
   const { t } = useLanguage();
@@ -41,12 +42,12 @@ const Profile = () => {
                 {/* Full Background Image */}
                 <div className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-[#0a0d0c]">
                   <img
-                    src="/assets/profile/foto1.png"
+                    src={getAssetPath("/assets/profile/foto1.png")}
                     alt={personalData.name}
                     className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = personalData.image || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80";
+                      e.target.src = getAssetPath(personalData.image || "/assets/profile/foto.png");
                     }}
                   />
                   {/* Top Vignette Gradient for Text Readability */}
