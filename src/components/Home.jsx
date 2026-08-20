@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { personalData, socialLinks } from '../data/portfolioData';
 
 // Custom Social Icons matching the reference perfectly
@@ -39,13 +39,54 @@ const jobRoles = [
 
 const Home = () => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const cardControls = useAnimationControls();
 
+  // Role rotator
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentRoleIndex((prevIndex) => (prevIndex + 1) % jobRoles.length);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
+
+  // Sequence: Drop & Aggressive Damped Pendulum Swing -> Smooth ±0.80° Idle Sway
+  useEffect(() => {
+    const runEntranceSequence = async () => {
+      // 1. Initial Drop with decaying realistic swings
+      await cardControls.start({
+        y: 0,
+        opacity: 1,
+        rotate: [-24, 18, -11, 6.5, -3, 1.4, -0.8],
+        transition: {
+          y: { 
+            type: "spring", 
+            stiffness: 85, 
+            damping: 11.5, 
+            mass: 1.15, 
+            delay: 0.15 
+          },
+          opacity: { duration: 0.25, delay: 0.15 },
+          rotate: { 
+            duration: 3.8, 
+            ease: [0.25, 0.1, 0.25, 1], 
+            delay: 0.15 
+          }
+        }
+      });
+
+      // 2. Seamlessly enter gentle continuous idle sway at ±0.80°
+      cardControls.start({
+        rotate: [-0.8, 0.8, -0.8],
+        transition: {
+          duration: 5.5,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }
+      });
+    };
+
+    runEntranceSequence();
+  }, [cardControls]);
 
   const downloadCV = () => {
     const link = document.createElement('a');
@@ -109,17 +150,17 @@ const Home = () => {
         </svg>
       </div>
 
-      <div className="relative z-10 max-w-7xl w-full mx-auto px-6 sm:px-10 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <div className="relative z-10 max-w-7xl w-full mx-auto px-6 sm:px-10 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
         
         {/* ================= LEFT COLUMN: HERO CONTENT ================= */}
         <motion.div 
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="lg:col-span-7 flex flex-col items-start text-left space-y-6"
+          className="lg:col-span-7 flex flex-col items-start text-left"
         >
-          {/* Top Pill Badges with Ultra Smooth Auto-Cycling Roles */}
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 min-h-[36px]">
+          {/* Top Pill Badges with Ultra Smooth Auto-Cycling Roles (Height: 36px) */}
+          <div className="h-9 flex items-center gap-2.5 sm:gap-3">
             <span className="text-sm sm:text-base font-semibold text-white tracking-wide">
               I'm Ready For Job
             </span>
@@ -147,8 +188,8 @@ const Home = () => {
             </motion.div>
           </div>
 
-          {/* Main Headline */}
-          <div className="space-y-1 sm:space-y-2">
+          {/* Main Headline (Starts at Y = 60px) */}
+          <div className="mt-6 space-y-1 sm:space-y-2">
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
               I'm {personalData.name || "M. Fadh Khulloh"}
             </h1>
@@ -158,12 +199,12 @@ const Home = () => {
           </div>
 
           {/* Subtitle / Bio */}
-          <p className="text-gray-400 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-normal">
+          <p className="mt-6 text-gray-400 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-normal">
             {personalData.bio || "Saya membantu bisnis dan individu membangun website serta solusi digital yang cepat, modern, dan mudah digunakan."}
           </p>
 
           {/* Social Links Row */}
-          <div className="flex items-center gap-3.5 sm:gap-4 pt-1">
+          <div className="mt-7 flex items-center gap-3.5 sm:gap-4">
             <a
               href={socialLinks.instagram || "https://instagram.com"}
               target="_blank"
@@ -206,7 +247,7 @@ const Home = () => {
           </div>
 
           {/* Download CV Action Button */}
-          <div className="pt-2">
+          <div className="mt-8">
             <button
               onClick={downloadCV}
               className="px-7 py-2.5 sm:py-3 rounded-full border border-emerald-500/80 hover:border-emerald-400 bg-transparent hover:bg-emerald-500/15 text-white font-medium text-sm sm:text-base tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(74,222,128,0.35)] cursor-pointer"
@@ -218,71 +259,54 @@ const Home = () => {
 
 
         {/* ================= RIGHT COLUMN: HANGING ID BADGE CARD ================= */}
-        <div className="lg:col-span-5 flex justify-center items-start relative w-full pt-6 lg:pt-0">
+        <div className="lg:col-span-5 flex justify-center items-start relative w-full pt-4 lg:pt-0">
 
-          {/* Framer Motion Container with Smooth Drop & Gentle Idle Sway */}
+          {/* Framer Motion Container with Drop & Dynamic Damped Pendulum Swing */}
           <motion.div
-            initial={{ opacity: 0, y: -380, rotate: -6 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              rotate: [-0.8, 0.8, -0.8],
-            }}
-            transition={{
-              y: { 
-                type: "spring", 
-                stiffness: 75, 
-                damping: 14, 
-                mass: 1.1, 
-                delay: 0.15 
-              },
-              opacity: { duration: 0.35, delay: 0.15 },
-              rotate: {
-                duration: 5.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 0.6,
-              }
-            }}
+            initial={{ opacity: 0, y: -450, rotate: -24 }}
+            animate={cardControls}
             style={{ transformOrigin: "top center" }}
-            className="flex flex-col items-center relative z-20"
+            className="flex flex-col items-center relative z-20 w-full"
           >
-            {/* --- SUSPENSION BEAD CHAIN --- */}
-            <div className="flex flex-col items-center">
-              {/* Top Anchor Point from Top Screen */}
-              <div className="w-1.5 h-1.5 rounded-full bg-gray-300 shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+            {/* Top clearance matching 60px on desktop with chain suspended from above */}
+            <div className="relative pt-2 lg:pt-[60px] flex flex-col items-center">
               
-              {/* Metallic Ball Chain */}
-              <div className="flex flex-col items-center space-y-1.5 my-0.5">
-                {[...Array(11)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-1.5 h-1.5 rounded-full bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
-                  />
-                ))}
+              {/* --- SUSPENSION BEAD CHAIN & CLASP (VISIBLE ON DESKTOP, COMPACT CLASP ON MOBILE) --- */}
+              <div className="lg:absolute lg:top-0 lg:left-1/2 lg:-translate-x-1/2 lg:-mt-20 flex flex-col items-center pointer-events-none mb-1 lg:mb-0">
+                {/* Top Anchor Point from Top Screen (Desktop only) */}
+                <div className="hidden lg:block w-1.5 h-1.5 rounded-full bg-gray-300 shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+                
+                {/* Metallic Ball Chain (Desktop only - prevents weird floating chain on mobile) */}
+                <div className="hidden lg:flex flex-col items-center space-y-1.5 my-0.5">
+                  {[...Array(14)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-1.5 h-1.5 rounded-full bg-gradient-to-b from-gray-200 via-gray-400 to-gray-600 shadow-[0_1px_3px_rgba(0,0,0,0.9)]"
+                    />
+                  ))}
+                </div>
+
+                {/* Lanyard Swivel Clasp / Metallic Hook */}
+                <div className="relative flex flex-col items-center -mt-0.5">
+                  {/* Upper ring */}
+                  <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-gray-400 bg-gray-900 shadow-md" />
+                  {/* Metallic Clip latch */}
+                  <div className="w-2 h-4 sm:w-2.5 sm:h-5 bg-gradient-to-r from-gray-500 via-gray-300 to-gray-600 rounded-sm -mt-1 shadow-md" />
+                  {/* Clasp base */}
+                  <div className="w-4 h-1.5 sm:w-5 sm:h-2 bg-gradient-to-r from-gray-600 via-gray-300 to-gray-700 rounded-full -mt-0.5 shadow-lg" />
+                </div>
               </div>
 
-              {/* Lanyard Swivel Clasp / Metallic Hook */}
-              <div className="relative flex flex-col items-center -mt-0.5">
-                {/* Upper ring */}
-                <div className="w-4 h-4 rounded-full border-2 border-gray-400 bg-gray-900 shadow-md" />
-                {/* Metallic Clip latch */}
-                <div className="w-2.5 h-5 bg-gradient-to-r from-gray-500 via-gray-300 to-gray-600 rounded-sm -mt-1 shadow-md" />
-                {/* Clasp base */}
-                <div className="w-5 h-2 bg-gradient-to-r from-gray-600 via-gray-300 to-gray-700 rounded-full -mt-0.5 shadow-lg" />
-              </div>
-            </div>
-
-            {/* --- ID BADGE CARD HOLDER WITH REALISTIC 3D LANYARD SPIN / FLIP ANIMATION --- */}
-            <div className="relative mt-1 cursor-pointer select-none [perspective:1200px]">
-              <motion.div
-                whileHover={{ rotateY: 180 }}
-                whileTap={{ rotateY: 180 }}
+              {/* --- ID BADGE CARD HOLDER --- */}
+              <div className="relative cursor-pointer select-none [perspective:1200px] mt-1 lg:mt-0">
+                <motion.div
+                  whileHover={{ rotateY: 180 }}
+                  whileTap={{ rotateY: 180 }}
                 transition={{ 
                   duration: 0.85, 
                   ease: [0.34, 1.3, 0.64, 1] 
                 }}
-                className="relative w-[260px] sm:w-[290px] md:w-[320px] aspect-[3/4.4] [transform-style:preserve-3d]"
+                className="relative w-[240px] sm:w-[280px] md:w-[320px] aspect-[3/4.4] [transform-style:preserve-3d]"
               >
                 {/* ================= CARD FRONT ================= */}
                 <div className="absolute inset-0 w-full h-full rounded-[22px] bg-[#0c0d0e] p-2 sm:p-2.5 border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.95)] [backface-visibility:hidden] flex flex-col">
@@ -359,8 +383,8 @@ const Home = () => {
                     </div>
 
                     <div>
-                      <p className="text-[10px] text-gray-400 uppercase font-mono tracking-wider">Specialization</p>
-                      <p className="text-xs font-semibold text-gray-200">Full Stack & IoT Engineer</p>
+                      <p className="text-[10px] text-gray-400 uppercase font-mono tracking-wider">Graduation</p>
+                      <p className="text-xs font-semibold text-gray-200">Computer Engineering Technology</p>
                     </div>
 
                     <div>
@@ -392,6 +416,8 @@ const Home = () => {
                 </div>
               </motion.div>
             </div>
+
+            </div> {/* Closes pt-[60px] container */}
 
           </motion.div>
         </div>
