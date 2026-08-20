@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Profile from './components/Profile';
@@ -11,7 +12,8 @@ import Contact from './components/Contact';
 function App() {
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-[#050607] text-white relative transition-colors duration-300 overflow-x-hidden selection:bg-emerald-500 selection:text-black">
+      <LanguageProvider>
+        <div className="min-h-screen bg-[#050607] text-white relative transition-colors duration-300 overflow-x-hidden selection:bg-emerald-500 selection:text-black">
         
         {/* --- GLOBAL FIXED STUDIO OVERHEAD SPOTLIGHT BEAM --- */}
         <div 
@@ -72,7 +74,8 @@ function App() {
           <Activities />
           <Contact />
         </main>
-      </div>
+        </div>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

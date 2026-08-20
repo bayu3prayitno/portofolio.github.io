@@ -1,5 +1,7 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "../contexts/LanguageContext";
+import { CyberHeader } from "./CyberText";
 
 // High-fidelity Tech & Tool SVG Icons
 const TechIcons = {
@@ -165,6 +167,8 @@ const techStackList = [
 ];
 
 const Skills = () => {
+  const { t } = useLanguage();
+
   return (
     <section 
       id="skills" 
@@ -173,20 +177,11 @@ const Skills = () => {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center space-y-3 mb-14"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-            Tools & Tech Stack
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Teknologi dan tools yang saya gunakan untuk membangun aplikasi dan solusi digital.
-          </p>
-        </motion.div>
+        <CyberHeader
+          titlePrefix={t.skills.title}
+          subtitle={t.skills.subtitle}
+          triggerKey={t.skills.title}
+        />
 
         {/* 5-Column Grid Layout matching the reference */}
         <motion.div

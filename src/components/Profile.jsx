@@ -1,8 +1,12 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { personalData, socialLinks } from "../data/portfolioData";
+import { useLanguage } from "../contexts/LanguageContext";
+import { DecryptedText, KineticText } from "./CyberText";
 
 const Profile = () => {
+  const { t } = useLanguage();
+
   const scrollTo = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -59,7 +63,7 @@ const Profile = () => {
                     {personalData.name.split(' ').slice(0, 2).join(' ')} {personalData.name.split(' ')[2] ? personalData.name.split(' ')[2][0] + '.' : ''}
                   </h3>
                   <p className="text-xs sm:text-sm font-medium text-gray-200">
-                    {personalData.title || "Fresh Graduate"}
+                    {t.hero.title}
                   </p>
                 </div>
 
@@ -81,7 +85,7 @@ const Profile = () => {
                       </p>
                       <div className="flex items-center space-x-1.5 mt-0.5">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(74,222,128,0.9)]" />
-                        <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">Online</span>
+                        <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider">{t.about.onlineStatus}</span>
                       </div>
                     </div>
                   </div>
@@ -91,7 +95,7 @@ const Profile = () => {
                     onClick={() => scrollTo('contact')}
                     className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-emerald-500/25 text-white hover:text-emerald-300 border border-white/20 hover:border-emerald-500/50 text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer shadow-sm"
                   >
-                    Contact Me
+                    {t.about.contactMe}
                   </button>
                 </div>
 
@@ -103,20 +107,31 @@ const Profile = () => {
             <div className="lg:col-span-7 flex flex-col justify-center text-left space-y-6">
               
               {/* Heading */}
-              <div>
+              <div className="overflow-hidden">
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-                  About Me
+                  <DecryptedText
+                    text={t.nav.profile}
+                    triggerKey={t.nav.profile}
+                    speed={25}
+                    maxIterations={6}
+                  />
                 </h2>
               </div>
 
               {/* Bio Paragraphs */}
-              <div className="space-y-3.5 text-gray-300 text-sm sm:text-base leading-relaxed font-normal">
-                <p>
-                  A disciplined, responsible, and open-minded Applied Bachelor of <span className="text-white font-medium">Computer Engineering Technology</span> graduate from <span className="text-white font-medium">Politeknik Negeri Semarang</span>.
-                </p>
-                <p className="text-gray-400">
-                  I possess practical experience and a broad technology engineering portfolio, ranging from developing integrated web applications and implementing <span className="text-gray-200 font-medium">Artificial Intelligence (AI)</span> for smart analysis, to designing <span className="text-gray-200 font-medium">IoT-based automation systems</span>. Backed by a solid internship track record and adaptive problem-solving skills, I am ready to fully contribute to an innovative professional work environment.
-                </p>
+              <div className="overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={`about-bio-${t.about.bio.slice(0, 20)}`}
+                    initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -15, filter: "blur(6px)" }}
+                    transition={{ duration: 0.45, ease: "easeOut", delay: 0.05 }}
+                    className="text-gray-300 text-sm sm:text-base leading-relaxed font-normal"
+                  >
+                    <KineticText text={t.about.bio} />
+                  </motion.div>
+                </AnimatePresence>
               </div>
 
               {/* 3 Metric Counters / Highlights for Fresh Graduate */}
@@ -127,9 +142,18 @@ const Profile = () => {
                   <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4ade80] tracking-tight">
                     3.74
                   </div>
-                  <div className="text-[10px] sm:text-xs font-semibold uppercase text-gray-400 tracking-wider">
-                    GPA / 4.00
-                  </div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`gpa-${t.about.stats.gpa}`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-[10px] sm:text-xs font-semibold uppercase text-gray-400 tracking-wider"
+                    >
+                      {t.about.stats.gpa}
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
 
                 {/* Stat 2: Projects */}
@@ -137,9 +161,18 @@ const Profile = () => {
                   <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4ade80] tracking-tight">
                     10+
                   </div>
-                  <div className="text-[10px] sm:text-xs font-semibold uppercase text-gray-400 tracking-wider">
-                    Completed Projects
-                  </div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`proj-${t.about.stats.projects}`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-[10px] sm:text-xs font-semibold uppercase text-gray-400 tracking-wider"
+                    >
+                      {t.about.stats.projects}
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
 
                 {/* Stat 3: Tech Domains */}
@@ -147,9 +180,18 @@ const Profile = () => {
                   <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4ade80] tracking-tight">
                     5+
                   </div>
-                  <div className="text-[10px] sm:text-xs font-semibold uppercase text-gray-400 tracking-wider">
-                    Core Tech Domains
-                  </div>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`domains-${t.about.stats.domains}`}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-[10px] sm:text-xs font-semibold uppercase text-gray-400 tracking-wider"
+                    >
+                      {t.about.stats.domains}
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
 
               </div>
@@ -160,14 +202,34 @@ const Profile = () => {
                   onClick={() => scrollTo('projects')}
                   className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-[#4ade80] hover:bg-[#3ec974] text-[#050607] font-bold text-sm sm:text-base tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_18px_rgba(74,222,128,0.4)] cursor-pointer"
                 >
-                  Lihat Project
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={t.hero.exploreBtn}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      {t.hero.exploreBtn}
+                    </motion.span>
+                  </AnimatePresence>
                 </button>
 
                 <button
                   onClick={() => scrollTo('contact')}
                   className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full border border-white/20 hover:border-emerald-400 bg-transparent hover:bg-white/5 text-white hover:text-emerald-400 font-semibold text-sm sm:text-base tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  Contact Me
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={t.about.touchBtn}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      {t.about.touchBtn}
+                    </motion.span>
+                  </AnimatePresence>
                 </button>
               </div>
 

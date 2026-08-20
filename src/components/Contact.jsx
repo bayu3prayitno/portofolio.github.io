@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Send, Github, Instagram, Linkedin } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { personalData, socialLinks } from '../data/portfolioData';
+import { useLanguage } from '../contexts/LanguageContext';
+import { CyberHeader } from './CyberText';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { t } = useLanguage();
 
   const handleChange = (e) => {
     setFormData({
@@ -23,7 +26,7 @@ const Contact = () => {
     setIsSubmitting(true);
     
     // Directing to WhatsApp with formatted message
-    const messageText = `Halo Bayu, nama saya *${formData.name}* (${formData.email}).%0A%0APesan: ${formData.message}`;
+    const messageText = `${t.contact.waIntro} *${formData.name}* (${formData.email}).%0A%0A${formData.message}`;
     const whatsappUrl = `https://wa.me/6285725040030?text=${messageText}`;
 
     setTimeout(() => {
@@ -48,14 +51,13 @@ const Contact = () => {
             transition={{ duration: 0.5 }}
             className="lg:col-span-5 space-y-6"
           >
-            <div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-                Let's <span className="text-[#4ade80]">Connect</span>
-              </h2>
-              <p className="text-gray-400 text-sm sm:text-base leading-relaxed mt-4 max-w-md">
-                Punya ide menarik atau ingin berkolaborasi? Kirimkan pesan dan saya akan membalasnya sesegera mungkin.
-              </p>
-            </div>
+            <CyberHeader
+              titlePrefix={t.contact.titlePrefix}
+              titleHighlight={t.contact.titleHighlight}
+              subtitle={t.contact.subtitle}
+              triggerKey={`${t.contact.titlePrefix}-${t.contact.titleHighlight}`}
+              className="text-left mb-6"
+            />
 
             {/* Social Icons Row */}
             <div className="flex items-center space-x-3 pt-2">
@@ -108,7 +110,7 @@ const Contact = () => {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Your Name"
+                  placeholder={t.contact.placeholderName}
                   className="w-full px-4 py-3.5 rounded-xl bg-[#090d0b] border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 transition-colors"
                 />
                 <input
@@ -117,7 +119,7 @@ const Contact = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Your Email"
+                  placeholder={t.contact.placeholderEmail}
                   className="w-full px-4 py-3.5 rounded-xl bg-[#090d0b] border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 transition-colors"
                 />
               </div>
@@ -130,7 +132,7 @@ const Contact = () => {
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Your Message"
+                  placeholder={t.contact.placeholderMessage}
                   className="w-full px-4 py-3.5 rounded-xl bg-[#090d0b] border border-white/15 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 transition-colors resize-none"
                 />
               </div>
@@ -142,7 +144,7 @@ const Contact = () => {
                 className="w-full py-3.5 rounded-xl bg-[#4ade80] hover:bg-[#3ec974] text-[#050607] font-bold text-sm tracking-wide flex items-center justify-center space-x-2 transition-all duration-200 hover:opacity-95 active:scale-[0.99] cursor-pointer shadow-md"
               >
                 <Send size={16} />
-                <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                <span>{isSubmitting ? t.contact.sendingBtn : t.contact.sendBtn}</span>
               </button>
 
             </form>
@@ -153,7 +155,7 @@ const Contact = () => {
         {/* Bottom Copyright Text */}
         <div className="mt-24 pt-8 text-center text-xs text-gray-500">
           <p>
-            © {new Date().getFullYear()} Bayu Tri Prayitno — Built with React & Tailwind
+            © {new Date().getFullYear()} Bayu Tri Prayitno — {t.contact.copyright}
           </p>
         </div>
 

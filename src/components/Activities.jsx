@@ -1,17 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Trophy, BookOpen, Users, Calendar, Award, ExternalLink, X, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { activities } from '../data/portfolioData';
+import { useLanguage } from '../contexts/LanguageContext';
+import { CyberHeader } from './CyberText';
 
 const Activities = () => {
   const [filter, setFilter] = useState('all');
-  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [selectedActivityId, setSelectedActivityId] = useState(null);
+  const { t } = useLanguage();
+
+  const displayActivities = activities.map((act, idx) => {
+    const trans = t.activities.items?.find((item) => item.id === act.id) || t.activities.items?.[idx];
+    return {
+      ...act,
+      title: trans?.title || act.title,
+      type: trans?.type || act.type,
+      description: trans?.description || act.description,
+    };
+  });
+
+  const activeActivity = displayActivities.find((a) => a.id === selectedActivityId);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (activeActivity) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [activeActivity]);
 
   const activityTypes = ['all', ...new Set(activities.map(activity => activity.type))];
   
   const filteredActivities = filter === 'all' 
-    ? activities 
-    : activities.filter(activity => activity.type === filter);
+    ? displayActivities 
+    : displayActivities.filter(activity => {
+        const orig = activities.find(a => a.id === activity.id);
+        return orig?.type === filter || activity.type.toLowerCase() === filter.toLowerCase();
+      });
 
   const getTypeIcon = (type) => {
     switch (type.toLowerCase()) {
@@ -38,36 +69,31 @@ const Activities = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center space-y-3 mb-12"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-            Activities & <span className="text-[#4ade80]">Experiences</span>
-          </h2>
-          <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Pengalaman organisasi, pelatihan bersertifikat, dan kontribusi akademik.
-          </p>
-        </motion.div>
+        <CyberHeader
+          titlePrefix={t.activities.titlePrefix}
+          titleHighlight={t.activities.titleHighlight}
+          subtitle={t.activities.subtitle}
+          triggerKey={`${t.activities.titlePrefix}-${t.activities.titleHighlight}`}
+        />
 
         {/* Filter Pills */}
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12">
-          {activityTypes.map((type) => (
-            <button
-              key={type}
-              onClick={() => setFilter(type)}
-              className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
-                filter === type
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-[0_0_15px_rgba(74,222,128,0.2)]'
-                  : 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/10'
-              }`}
-            >
-              {type.toUpperCase()}
-            </button>
-          ))}
+          {activityTypes.map((type) => {
+            const filterLabel = t.activities.filters[type.toLowerCase()] || type.toUpperCase();
+            return (
+              <button
+                key={type}
+                onClick={() => setFilter(type)}
+                className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+                  filter === type
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 shadow-[0_0_15px_rgba(74,222,128,0.2)]'
+                    : 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/10'
+                }`}
+              >
+                {filterLabel}
+              </button>
+            );
+          })}
         </div>
 
         {/* Activities Grid */}
@@ -88,7 +114,7 @@ const Activities = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                onClick={() => setSelectedActivity(activity)}
+                onClick={() => setSelectedActivityId(activity.id)}
                 className="group relative rounded-2xl bg-[#090c0a]/90 hover:bg-[#0f1411] border border-white/10 hover:border-emerald-500/40 p-3 flex flex-col justify-between transition-all duration-300 shadow-[0_8px_25px_rgba(0,0,0,0.7)] hover:shadow-emerald-500/10 cursor-pointer overflow-hidden backdrop-blur-md"
               >
                 {/* Image Window */}
@@ -129,36 +155,40 @@ const Activities = () => {
           })}
         </motion.div>
 
-        {/* Modal */}
+      </div>
+
+      {/* Modal Rendered Directly to Body via Portal */}
+      {typeof document !== 'undefined' && createPortal(
         <AnimatePresence>
-          {selectedActivity && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {activeActivity && (
+            <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/80 backdrop-blur-md"
-                onClick={() => setSelectedActivity(null)}
+                className="fixed inset-0 bg-black/85 backdrop-blur-md"
+                onClick={() => setSelectedActivityId(null)}
               />
 
               <motion.div
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="relative z-10 w-full max-w-xl bg-[#0b0f0d] border border-white/20 rounded-2xl overflow-hidden shadow-2xl p-6 sm:p-8 space-y-5"
+                className="relative z-10 w-full max-w-xl bg-[#0b0f0d] border border-white/20 rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.98)] p-6 sm:p-8 space-y-5"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-                      {selectedActivity.type} • {selectedActivity.date}
+                      {activeActivity.type} • {activeActivity.date}
                     </span>
                     <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
-                      {selectedActivity.title}
+                      {activeActivity.title}
                     </h3>
                   </div>
                   <button
-                    onClick={() => setSelectedActivity(null)}
-                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white"
+                    onClick={() => setSelectedActivityId(null)}
+                    aria-label="Close modal"
+                    className="p-2 rounded-full bg-black/70 hover:bg-black text-white hover:text-emerald-400 border border-white/20 transition-all cursor-pointer shadow-lg"
                   >
                     <X size={18} />
                   </button>
@@ -166,35 +196,35 @@ const Activities = () => {
 
                 <div className="w-full aspect-[16/10] rounded-xl overflow-hidden bg-black/80">
                   <img
-                    src={selectedActivity.image}
-                    alt={selectedActivity.title}
+                    src={activeActivity.image}
+                    alt={activeActivity.title}
                     className="w-full h-full object-cover"
                   />
                 </div>
 
                 <p className="text-sm text-gray-300 leading-relaxed">
-                  {selectedActivity.description}
+                  {activeActivity.description}
                 </p>
 
-                {selectedActivity.certificate && (
+                {activeActivity.certificate && (
                   <div className="pt-3 border-t border-white/10">
                     <a
-                      href={selectedActivity.certificate}
+                      href={activeActivity.certificate}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-black font-bold text-xs sm:text-sm shadow-md transition-all"
                     >
                       <ExternalLink size={16} />
-                      <span>Lihat Sertifikat / Dokumen</span>
+                      <span>{t.activities.viewDoc}</span>
                     </a>
                   </div>
                 )}
               </motion.div>
             </div>
           )}
-        </AnimatePresence>
-
-      </div>
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 };

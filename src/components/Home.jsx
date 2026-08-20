@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
 import { personalData, socialLinks } from '../data/portfolioData';
+import { useLanguage } from '../contexts/LanguageContext';
+import { DecryptedText, KineticText } from './CyberText';
 
 // Custom Social Icons matching the reference perfectly
 const InstagramIcon = () => (
@@ -24,9 +26,11 @@ const GithubIcon = () => (
   </svg>
 );
 
-const TikTokIcon = () => (
-  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.86.12V9.41a6.33 6.33 0 0 0-.86-.06 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.18 8.18 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.18z" />
+const LinkedInIcon = () => (
+  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
   </svg>
 );
 
@@ -40,6 +44,7 @@ const jobRoles = [
 const Home = () => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const cardControls = useAnimationControls();
+  const { t } = useLanguage();
 
   // Role rotator
   useEffect(() => {
@@ -109,49 +114,91 @@ const Home = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="lg:col-span-7 flex flex-col items-start text-left"
         >
-          {/* Top Pill Badges with Ultra Smooth Auto-Cycling Roles (Height: 36px) */}
+          {/* Top Pill Badges with Ultra Smooth 3D Cube-Flip Cycling Roles */}
           <div className="h-9 flex items-center gap-2.5 sm:gap-3">
-            <span className="text-sm sm:text-base font-semibold text-white tracking-wide">
-              I'm Ready For Job
-            </span>
+            <div className="text-sm sm:text-base font-semibold text-white tracking-wide">
+              <DecryptedText 
+                text={t.hero.status} 
+                triggerKey={t.hero.status}
+                speed={20}
+                maxIterations={6}
+              />
+            </div>
+
             <motion.div 
               layout
               transition={{ type: "spring", stiffness: 450, damping: 32 }}
-              className="relative h-7 sm:h-8 px-3 sm:px-4 rounded-full bg-[#4ade80] text-[#050607] font-bold text-xs sm:text-sm tracking-tight shadow-[0_0_18px_rgba(74,222,128,0.45)] inline-flex items-center justify-center overflow-hidden"
+              className="relative h-7 sm:h-8 px-3 sm:px-4 rounded-full bg-[#4ade80] text-[#050607] font-bold text-xs sm:text-sm tracking-tight shadow-[0_0_18px_rgba(74,222,128,0.45)] inline-flex items-center justify-center overflow-hidden [perspective:1000px]"
             >
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
                   key={jobRoles[currentRoleIndex]}
-                  initial={{ y: 22, opacity: 0, filter: "blur(4px)" }}
-                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                  exit={{ y: -22, opacity: 0, filter: "blur(4px)" }}
+                  initial={{ y: 22, opacity: 0, rotateX: 65, filter: "blur(4px)" }}
+                  animate={{ y: 0, opacity: 1, rotateX: 0, filter: "blur(0px)" }}
+                  exit={{ y: -22, opacity: 0, rotateX: -65, filter: "blur(4px)" }}
                   transition={{ 
-                    y: { type: "spring", stiffness: 350, damping: 28 },
+                    y: { type: "spring", stiffness: 380, damping: 26 },
+                    rotateX: { duration: 0.32 },
                     opacity: { duration: 0.25 },
                     filter: { duration: 0.25 }
                   }}
-                  className="inline-block whitespace-nowrap"
+                  className="inline-block whitespace-nowrap transform-gpu"
                 >
-                  {jobRoles[currentRoleIndex]}
+                  <DecryptedText 
+                    text={jobRoles[currentRoleIndex]} 
+                    triggerKey={jobRoles[currentRoleIndex]}
+                    speed={25}
+                    maxIterations={6}
+                  />
                 </motion.span>
               </AnimatePresence>
             </motion.div>
           </div>
 
-          {/* Main Headline (Starts at Y = 60px) */}
-          <div className="mt-6 space-y-1 sm:space-y-2">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-              I'm {personalData.name || "M. Fadh Khulloh"}
-            </h1>
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-              {personalData.title || "Full Stack Developer"}
-            </h2>
+          {/* Main Headline with 3D Kinetic Stagger & Decryption */}
+          <div className="mt-6 space-y-1 sm:space-y-2 overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`headline-${t.hero.greeting}-${t.hero.title}`}
+                initial={{ opacity: 0, y: 25, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+                  <span className="text-gray-400 mr-2">{t.hero.greeting}</span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-100 to-gray-400">
+                    {personalData.name || "Bayu Tri Prayitno"}
+                  </span>
+                </h1>
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+                  <DecryptedText 
+                    text={t.hero.title}
+                    triggerKey={t.hero.title}
+                    speed={30}
+                    maxIterations={8}
+                    className="text-transparent bg-clip-text bg-gradient-to-r from-[#4ade80] via-[#86efac] to-[#22c55e] drop-shadow-[0_0_25px_rgba(74,222,128,0.4)]"
+                  />
+                </h2>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Subtitle / Bio */}
-          <p className="mt-6 text-gray-400 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-normal">
-            {personalData.bio || "Saya membantu bisnis dan individu membangun website serta solusi digital yang cepat, modern, dan mudah digunakan."}
-          </p>
+          {/* Subtitle / Bio with Kinetic Stagger */}
+          <div className="overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div 
+                key={`desc-${t.hero.description}`}
+                initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, y: -15, filter: "blur(6px)" }}
+                transition={{ duration: 0.4, ease: "easeOut", delay: 0.05 }}
+                className="mt-6 text-gray-400 text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-normal"
+              >
+                <KineticText text={t.hero.description} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
           {/* Social Links Row */}
           <div className="mt-7 flex items-center gap-3.5 sm:gap-4">
@@ -186,13 +233,13 @@ const Home = () => {
             </a>
 
             <a
-              href={socialLinks.tiktok || socialLinks.linkedin || "https://tiktok.com"}
+              href={socialLinks.linkedin || "https://linkedin.com/in/bayu3prayitno"}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="TikTok"
+              aria-label="LinkedIn"
               className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-emerald-500/70 hover:border-emerald-400 bg-[#0d1410]/80 hover:bg-emerald-500/15 text-emerald-400 flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-[0_0_12px_rgba(16,185,129,0.15)] hover:shadow-[0_0_18px_rgba(74,222,128,0.35)]"
             >
-              <TikTokIcon />
+              <LinkedInIcon />
             </a>
           </div>
 
@@ -202,7 +249,7 @@ const Home = () => {
               onClick={downloadCV}
               className="px-7 py-2.5 sm:py-3 rounded-full border border-emerald-500/80 hover:border-emerald-400 bg-transparent hover:bg-emerald-500/15 text-white font-medium text-sm sm:text-base tracking-wide transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(74,222,128,0.35)] cursor-pointer"
             >
-              Download CV
+              {t.hero.cvBtn}
             </button>
           </div>
         </motion.div>
@@ -328,18 +375,18 @@ const Home = () => {
                     </div>
 
                     <div>
-                      <p className="text-[10px] text-gray-400 uppercase font-mono tracking-wider">Name</p>
+                      <p className="text-[10px] text-gray-400 uppercase font-mono tracking-wider">{t.hero.cardBackName}</p>
                       <p className="text-sm font-bold text-white tracking-wide truncate">{personalData.name}</p>
                     </div>
 
                     <div>
-                      <p className="text-[10px] text-gray-400 uppercase font-mono tracking-wider">Graduation</p>
-                      <p className="text-xs font-semibold text-gray-200">Computer Engineering Technology</p>
+                      <p className="text-[10px] text-gray-400 uppercase font-mono tracking-wider">{t.hero.cardBackGraduation}</p>
+                      <p className="text-xs font-semibold text-gray-200">{t.hero.cardBackGraduationValue}</p>
                     </div>
 
                     <div>
-                      <p className="text-[10px] text-gray-400 uppercase font-mono tracking-wider">Institution</p>
-                      <p className="text-[11px] text-gray-300 truncate">Politeknik Negeri Semarang</p>
+                      <p className="text-[10px] text-gray-400 uppercase font-mono tracking-wider">{t.hero.cardBackInstitution}</p>
+                      <p className="text-[11px] text-gray-300 truncate">{t.hero.cardBackInstitutionValue}</p>
                     </div>
                   </div>
 

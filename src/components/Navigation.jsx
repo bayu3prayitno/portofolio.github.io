@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, Home, User, Code, GraduationCap, FolderOpen, Calendar, Mail } from 'lucide-react';
-import { useTheme } from '../contexts/ThemeContext';
-import { personalData } from '../data/portfolioData';
+import { Menu, X, Home, User, Code, FolderOpen, Calendar, Mail, Globe } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { language, toggleLanguage, t } = useLanguage();
 
   const navItems = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'skills', label: 'Skills', icon: Code },
-    { id: 'projects', label: 'Projects', icon: FolderOpen },
-    { id: 'activities', label: 'Activities', icon: Calendar },
-    { id: 'contact', label: 'Contact', icon: Mail },
+    { id: 'home', label: t.nav.home, icon: Home },
+    { id: 'profile', label: t.nav.profile, icon: User },
+    { id: 'skills', label: t.nav.skills, icon: Code },
+    { id: 'projects', label: t.nav.projects, icon: FolderOpen },
+    { id: 'activities', label: t.nav.activities, icon: Calendar },
+    { id: 'contact', label: t.nav.contact, icon: Mail },
   ];
 
   useEffect(() => {
@@ -38,7 +37,7 @@ const Navigation = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navItems]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -50,7 +49,7 @@ const Navigation = () => {
 
   return (
     <>
-      {/* Floating Desktop & Mobile Navigation */}
+      {/* Floating Desktop & Mobile Navigation Bar */}
       <nav 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 pointer-events-none ${
           scrolled 
@@ -60,7 +59,7 @@ const Navigation = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center items-center relative">
           
-          {/* Centered Desktop Menu - Floating Pill Bar */}
+          {/* ================= 1. PURE CENTERED NAVIGATION PILL ================= */}
           <div className="hidden md:flex items-center space-x-1 p-1.5 rounded-full bg-[#090c0a]/85 border border-white/10 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.8)] pointer-events-auto">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -82,15 +81,31 @@ const Navigation = () => {
             })}
           </div>
 
-          {/* Mobile Hamburger Button (Positioned Top-Right) */}
-          <div className="md:hidden absolute right-4 top-0 pointer-events-auto">
+          {/* ================= 2. SEPARATE INDEPENDENT LANGUAGE SWITCHER (TOP-RIGHT) ================= */}
+          <div className="absolute right-4 sm:right-6 lg:right-8 top-0 pointer-events-auto flex items-center space-x-2.5">
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Open menu"
-              className="p-2.5 rounded-full text-gray-300 hover:text-white bg-[#090c0a]/90 border border-white/15 backdrop-blur-xl shadow-lg transition-all duration-200"
+              onClick={toggleLanguage}
+              className="flex items-center space-x-2 px-3.5 py-2 sm:py-2.5 rounded-full bg-[#090c0a]/85 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-xs font-mono font-bold text-gray-300 hover:text-emerald-400 shadow-[0_8px_25px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all duration-200 cursor-pointer group"
+              title="Switch Language / Ganti Bahasa"
             >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
+              <Globe size={14} className="text-emerald-400 group-hover:rotate-45 transition-transform duration-300" />
+              <span className="tracking-wider">
+                <span className={language === 'en' ? 'text-emerald-400' : 'text-gray-500'}>EN</span>
+                <span className="text-gray-600 mx-1">/</span>
+                <span className={language === 'id' ? 'text-emerald-400' : 'text-gray-500'}>ID</span>
+              </span>
             </button>
+
+            {/* Mobile Hamburger Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label="Open menu"
+                className="p-2.5 rounded-full text-gray-300 hover:text-white bg-[#090c0a]/90 border border-white/15 backdrop-blur-xl shadow-lg transition-all duration-200 cursor-pointer"
+              >
+                {isOpen ? <X size={18} /> : <Menu size={18} />}
+              </button>
+            </div>
           </div>
 
         </div>
@@ -112,7 +127,7 @@ const Navigation = () => {
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`flex items-center space-x-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    className={`flex items-center space-x-3 w-full px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer ${
                       isActive
                         ? 'text-emerald-400 bg-emerald-500/15 border border-emerald-500/30'
                         : 'text-gray-300 hover:text-white hover:bg-white/5'
