@@ -1,137 +1,214 @@
 import React from 'react';
-import { GraduationCap, Calendar, Award, MapPin } from 'lucide-react';
+import { Award, School, BookOpen, Layers, Terminal, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { education } from '../data/portfolioData';
+
+const educationList = [
+  {
+    id: "polines",
+    institution: "Politeknik Negeri Semarang",
+    degree: "Applied Bachelor (D4) — Teknologi Rekayasa Komputer",
+    period: "2022 — 2026",
+    level: "HIGHER EDUCATION",
+    gpa: "3.74",
+    maxGpa: "4.00",
+    honors: "Cum Laude Standing",
+    thesis: "Pengembangan Sistem Berbasis IoT, AI & Computer Vision untuk Smart Automation",
+    domains: ["IoT & Embedded C++", "Computer Vision & AI", "Full-Stack Web", "Microcontroller Architecture"],
+    accentColor: "emerald",
+    serialNumber: "POLINES-TK-2022",
+  },
+  {
+    id: "smkn1",
+    institution: "SMK Negeri 1 Batang",
+    degree: "Vocational Diploma — Teknik Komputer dan Jaringan",
+    period: "2019 — 2022",
+    level: "VOCATIONAL FOUNDATION",
+    honors: "Network & Hardware Major",
+    thesis: "Administrasi Infrastruktur Jaringan, Routing Switching, dan Troubleshooting Server",
+    domains: ["Computer Networking", "MikroTik & Cisco", "Linux Server Admin", "Hardware Troubleshooting"],
+    accentColor: "blue",
+    serialNumber: "SMKN1B-TKJ-2019",
+  },
+];
 
 const Education = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
   return (
-    <section id="education" className="py-20 bg-white dark:bg-dark-900">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section 
+      id="education" 
+      className="relative py-28 bg-transparent text-white overflow-hidden"
+    >
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center space-y-3 mb-16"
         >
-          <h2 className="section-title">Education</h2>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-emerald-400 text-xs font-mono tracking-widest uppercase mb-2">
+            <Terminal size={12} />
+            <span>Academic Milestones</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+            Educational <span className="text-[#4ade80]">Journey</span>
+          </h2>
+          <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Fondasi akademik dan pembentukan keahlian rekayasa teknologi komputasi.
+          </p>
+        </motion.div>
+
+        {/* Dynamic Dual Credential Panels */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
+          {/* ================= CARD 1: POLINES (LARGER / PRIMARY CARD) ================= */}
           <motion.div
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            variants={containerVariants}
-            className="relative"
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-7 relative rounded-[28px] bg-gradient-to-br from-[#0c1410] via-[#080d0a] to-[#040605] border border-white/15 hover:border-emerald-500/50 p-6 sm:p-9 flex flex-col justify-between transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.85)] hover:shadow-[0_0_35px_rgba(74,222,128,0.15)] group overflow-hidden"
           >
-            {/* Timeline Line */}
-            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-px h-full w-0.5 bg-gradient-to-b from-primary-500 to-blue-600"></div>
+            {/* Background Circuit Grid Texture */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-40 group-hover:opacity-70 transition-opacity" />
+            <div className="absolute top-0 right-0 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-            {education.map((edu, index) => (
-              <motion.div
-                key={edu.id}
-                variants={itemVariants}
-                className={`relative flex items-center mb-12 ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
-              >
-                {/* Timeline Dot */}
-                <div className="absolute left-6 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-primary-500 border-4 border-white dark:border-dark-900 rounded-full z-10"></div>
+            <div className="relative z-10 space-y-6">
+              
+              {/* Header Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                <div className="flex items-center gap-2 text-[11px] font-mono tracking-wider text-emerald-400 uppercase">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>{educationList[0].level}</span>
+                </div>
+                <div className="text-[11px] font-mono text-gray-500">
+                  {educationList[0].period}
+                </div>
+              </div>
 
-                {/* Content Card */}
-                <div className={`w-full md:w-1/2 ml-16 md:ml-0 ${
-                  index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'
-                }`}>
-                  <div className="card p-8 hover:shadow-xl transition-shadow duration-300">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
-                          <GraduationCap className="w-6 h-6 text-primary-500" />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                            {edu.degree}
-                          </h3>
-                          <p className="text-primary-500 font-medium">{edu.institution}</p>
-                        </div>
-                      </div>
-                      {edu.IPK && (
-                        <div className="text-right">
-                          <span className="text-sm text-gray-500 dark:text-gray-400">IPK</span>
-                          <p className="text-lg font-semibold text-gray-200 dark:text-white">
-                            {edu.IPK}
-                          </p>
-                        </div>
-                      )}
-                    </div>
+              {/* Institution & Degree */}
+              <div className="space-y-1.5">
+                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 flex items-center gap-1.5">
+                  <School size={14} className="text-emerald-400" />
+                  <span>{educationList[0].institution}</span>
+                </p>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-snug">
+                  {educationList[0].degree}
+                </h3>
+              </div>
 
-                    {/* Period */}
-                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300 mb-4">
-                      <Calendar className="w-4 h-4" />
-                      <span className="text-sm font-medium">{edu.period}</span>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                      {edu.description}
-                    </p>
-
-                    {/* Achievements */}
-                    {edu.achievements && edu.achievements.length > 0 && (
-                      <div>
-                        <div className="flex items-center space-x-2 mb-3">
-                          <Award className="w-5 h-5 text-primary-500" />
-                          <h4 className="font-semibold text-gray-900 dark:text-white">
-                            Key Achievements
-                          </h4>
-                        </div>
-                        <ul className="space-y-2">
-                          {edu.achievements.map((achievement, achieveIndex) => (
-                            <li
-                              key={achieveIndex}
-                              className="flex items-start space-x-2 text-gray-600 dark:text-gray-300"
-                            >
-                              <div className="w-1.5 h-1.5 bg-primary-500 rounded-full mt-2 flex-shrink-0"></div>
-                              <span className="text-sm">{achievement}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* Decorative Element */}
-                    <div className="absolute top-4 right-4 opacity-10">
-                      <GraduationCap className="w-12 h-12 text-primary-500" />
-                    </div>
+              {/* GPA & Honor Highlight Box */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-black/40 border border-emerald-500/25 flex flex-wrap items-center justify-between gap-4 backdrop-blur-sm">
+                <div>
+                  <span className="text-[10px] font-mono uppercase text-gray-400 tracking-wider block">
+                    Cumulative GPA Score
+                  </span>
+                  <div className="flex items-baseline gap-1.5 mt-0.5">
+                    <span className="text-3xl sm:text-4xl font-extrabold text-[#4ade80] font-mono tracking-tight">
+                      {educationList[0].gpa}
+                    </span>
+                    <span className="text-sm font-mono text-gray-500">/ {educationList[0].maxGpa}</span>
                   </div>
                 </div>
-              </motion.div>
-            ))}
+
+                <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+                  <Award size={15} className="text-emerald-400" />
+                  <span>{educationList[0].honors}</span>
+                </div>
+              </div>
+
+              {/* Capstone / Focus Overview */}
+              <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                <span className="text-gray-500 block text-[11px] font-mono uppercase tracking-wider mb-1">Focus & Applied Engineering:</span>
+                {educationList[0].thesis}
+              </p>
+            </div>
+
+            {/* Core Domain Badges */}
+            <div className="relative z-10 pt-6 mt-6 border-t border-white/10">
+              <div className="flex flex-wrap gap-2">
+                {educationList[0].domains.map((domain, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-xs font-medium group-hover:border-emerald-500/30 transition-colors"
+                  >
+                    #{domain}
+                  </span>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
-          {/* Additional Info */}
-          
-        </motion.div>
+
+          {/* ================= CARD 2: SMK NEGERI 1 BATANG (FOUNDATIONAL CARD) ================= */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="lg:col-span-5 relative rounded-[28px] bg-gradient-to-br from-[#0c1014] via-[#080a0d] to-[#040507] border border-white/15 hover:border-blue-400/50 p-6 sm:p-9 flex flex-col justify-between transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.85)] hover:shadow-[0_0_35px_rgba(56,189,248,0.15)] group overflow-hidden"
+          >
+            {/* Background Circuit Grid Texture */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-40 group-hover:opacity-70 transition-opacity" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative z-10 space-y-6">
+              
+              {/* Header Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                <div className="flex items-center gap-2 text-[11px] font-mono tracking-wider text-blue-400 uppercase">
+                  <span className="w-2 h-2 rounded-full bg-blue-400" />
+                  <span>{educationList[1].level}</span>
+                </div>
+                <div className="text-[11px] font-mono text-gray-500">
+                  {educationList[1].period}
+                </div>
+              </div>
+
+              {/* Institution & Degree */}
+              <div className="space-y-1.5">
+                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 flex items-center gap-1.5">
+                  <BookOpen size={14} className="text-blue-400" />
+                  <span>{educationList[1].institution}</span>
+                </p>
+                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight leading-snug">
+                  {educationList[1].degree}
+                </h3>
+              </div>
+
+              {/* Foundation Note Box */}
+              <div className="p-4 rounded-2xl bg-black/40 border border-blue-500/20 space-y-1 backdrop-blur-sm">
+                <span className="text-[10px] font-mono uppercase text-blue-400 tracking-wider block">
+                  Core Foundation Track
+                </span>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  {educationList[1].thesis}
+                </p>
+              </div>
+
+              <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                Membangun pemahaman mendalam tentang arsitektur jaringan komputer, routing protokol, dan perakitan sistem perangkat keras.
+              </p>
+            </div>
+
+            {/* Core Domain Badges */}
+            <div className="relative z-10 pt-6 mt-6 border-t border-white/10">
+              <div className="flex flex-wrap gap-2">
+                {educationList[1].domains.map((domain, i) => (
+                  <span
+                    key={i}
+                    className="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-xs font-medium group-hover:border-blue-400/30 transition-colors"
+                  >
+                    #{domain}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+
       </div>
     </section>
   );

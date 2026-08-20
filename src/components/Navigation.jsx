@@ -13,7 +13,6 @@ const Navigation = () => {
     { id: 'home', label: 'Home', icon: Home },
     { id: 'profile', label: 'Profile', icon: User },
     { id: 'skills', label: 'Skills', icon: Code },
-    { id: 'education', label: 'Education', icon: GraduationCap },
     { id: 'projects', label: 'Projects', icon: FolderOpen },
     { id: 'activities', label: 'Activities', icon: Calendar },
     { id: 'contact', label: 'Contact', icon: Mail },

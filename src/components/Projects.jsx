@@ -1,260 +1,187 @@
-import React, { useState } from 'react';
-import { ExternalLink, Github, Eye, Code, Star } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { projects } from '../data/portfolioData';
+import React, { useState } from "react";
+import { ExternalLink, Github, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { projects } from "../data/portfolioData";
 
 const Projects = () => {
-  const [filter, setFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const technologies = ['all', ...new Set(projects.flatMap(project => project.technologies))];
-  
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(project => project.technologies.includes(filter));
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6
-      }
-    }
-  };
-
-  const ProjectCard = ({ project, index }) => (
-    <motion.div
-      variants={itemVariants}
-      className="card overflow-hidden group cursor-pointer"
-      onClick={() => setSelectedProject(project)}
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.3 }}
-    >
-      {/* Project Image */}
-      <div className="relative overflow-hidden">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-          onError={(e) => {
-            e.target.src = `https://via.placeholder.com/400x300/3b82f6/ffffff?text=${encodeURIComponent(project.title)}`;
-          }}
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex space-x-4">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(project.github, '_blank');
-              }}
-              className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors duration-200"
-            >
-              <Github size={20} />
-            </button>
-          </div>
-        </div>
-        {project.featured && (
-          <div className="absolute top-4 right-4">
-            <div className="bg-yellow-500 text-white p-2 rounded-full">
-              <Star size={16} />
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Project Content */}
-      <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-primary-500 transition-colors duration-200">
-          {project.title}
-        </h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
-          {project.description}
-        </p>
-
-        {/* Technologies */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.technologies.slice(0, 3).map((tech, techIndex) => (
-            <span
-              key={techIndex}
-              className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-500 text-xs font-medium rounded-full"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.technologies.length > 3 && (
-            <span className="px-3 py-1 bg-gray-100 dark:bg-dark-700 text-gray-500 dark:text-gray-400 text-xs font-medium rounded-full">
-              +{project.technologies.length - 3} more
-            </span>
-          )}
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center justify-between">
-          <button className="flex items-center space-x-2 text-primary-500 hover:text-primary-600 transition-colors duration-200">
-            <Eye size={16} />
-            <span className="text-sm font-medium">View Details</span>
-          </button>
-          <div className="flex space-x-2">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transition-colors duration-200"
-            >
-              <Github size={16} />
-            </a>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-
   return (
-    <section id="projects" className="py-20 bg-gray-50 dark:bg-dark-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section 
+      id="projects" 
+      className="relative py-24 bg-transparent text-white overflow-hidden"
+    >
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center space-y-3 mb-14"
         >
-          <h2 className="section-title">Featured Projects</h2>
-          
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 mr-4">
-              <Code size={20} />
-              <span className="font-medium">Filter by technology:</span>
-            </div>
-            {technologies.slice(0, 6).map((tech) => (
-              <button
-                key={tech}
-                onClick={() => setFilter(tech)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                  filter === tech
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-white dark:bg-dark-900 text-gray-700 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/20 border border-gray-200 dark:border-dark-700'
-                }`}
-              >
-                {tech.charAt(0).toUpperCase() + tech.slice(1)}
-              </button>
-            ))}
-          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+            My <span className="text-[#4ade80]">Projects</span>
+          </h2>
+          <p className="text-gray-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Beberapa project yang pernah saya kerjakan.
+          </p>
+        </motion.div>
 
-          {/* Projects Grid */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {filteredProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
-          </motion.div>
+        {/* 4-Column Grid Layout matching the reference */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ staggerChildren: 0.06 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5"
+        >
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id || index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.04 }}
+              whileHover={{ y: -4, scale: 1.02 }}
+              onClick={() => setSelectedProject(project)}
+              className="group relative rounded-[22px] bg-[#0c100e] hover:bg-[#0c100e] border border-white/10 hover:border-emerald-500/70 p-2.5 flex flex-col justify-between transition-all duration-300 shadow-md hover:shadow-[0_12px_28px_rgba(0,0,0,0.8)] cursor-pointer overflow-hidden"
+            >
+              {/* Project Image Window */}
+              <div className="relative w-full aspect-[16/10] rounded-[16px] overflow-hidden bg-black/90 mb-2">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover object-top filter grayscale contrast-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-105 transition-all duration-500"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80";
+                  }}
+                />
+              </div>
 
-          {/* Project Modal */}
+              {/* Bottom Project Details Bar (Deep calm forest-emerald tone on hover) */}
+              <div className="relative z-10 px-3 py-2 rounded-[14px] transition-all duration-300 group-hover:bg-[#113821] flex flex-col justify-center space-y-1">
+                {/* Row 1: Title & Category */}
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="font-bold text-xs sm:text-sm text-white tracking-tight truncate">
+                    {project.title}
+                  </h3>
+                  <span className="text-[10px] sm:text-[11px] font-medium text-gray-400 group-hover:text-emerald-300 whitespace-nowrap flex-shrink-0">
+                    {project.category || "Web Application"}
+                  </span>
+                </div>
+
+                {/* Row 2: Technologies */}
+                <div className="text-[9px] sm:text-[10px] text-gray-500 group-hover:text-gray-300 font-mono tracking-tight truncate">
+                  {project.techText || (project.technologies ? project.technologies.join(', ') : 'HTML, CSS, JS')}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Interactive Project Modal */}
+        <AnimatePresence>
           {selectedProject && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-white dark:bg-dark-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/80 backdrop-blur-md"
+                onClick={() => setSelectedProject(null)}
+              />
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="relative z-10 w-full max-w-2xl bg-[#0b0f0d] border border-white/20 rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[90vh] flex flex-col"
               >
-                <div className="relative">
+                {/* Modal Header Image */}
+                <div className="relative w-full aspect-[16/9] bg-black overflow-hidden flex-shrink-0">
                   <img
                     src={selectedProject.image}
                     alt={selectedProject.title}
-                    className="w-full h-64 object-cover rounded-t-xl"
-                    onError={(e) => {
-                      e.target.src = `https://via.placeholder.com/600x300/3b82f6/ffffff?text=${encodeURIComponent(selectedProject.title)}`;
-                    }}
+                    className="w-full h-full object-cover"
                   />
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="absolute top-4 right-4 p-2 bg-black bg-opacity-50 text-white rounded-full hover:bg-opacity-70 transition-all duration-200"
+                    aria-label="Close modal"
+                    className="absolute top-4 right-4 p-2 rounded-full bg-black/70 hover:bg-black text-white hover:text-emerald-400 border border-white/20 transition-all cursor-pointer"
                   >
-                    ×
+                    <X size={18} />
                   </button>
                 </div>
-                
-                <div className="p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                    {selectedProject.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+
+                {/* Modal Content */}
+                <div className="p-6 sm:p-8 space-y-4 overflow-y-auto">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                        {selectedProject.title}
+                      </h3>
+                      <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider mt-0.5">
+                        {selectedProject.category}
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
                     {selectedProject.description}
                   </p>
-                  
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Technologies Used:</h4>
+
+                  {/* Tech Tags */}
+                  <div>
+                    <h4 className="text-xs font-semibold uppercase text-gray-400 tracking-wider mb-2">
+                      Technologies Used:
+                    </h4>
                     <div className="flex flex-wrap gap-2">
-                      {selectedProject.technologies.map((tech, index) => (
+                      {selectedProject.technologies?.map((tech, i) => (
                         <span
-                          key={index}
-                          className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-500 text-sm font-medium rounded-full"
+                          key={i}
+                          className="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-medium"
                         >
                           {tech}
                         </span>
                       ))}
                     </div>
                   </div>
-                  
-                  <div className="flex space-x-4">
-                    <a
-                      href={selectedProject.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-secondary flex items-center space-x-2"
-                    >
-                      <Github size={20} />
-                      <span>View Code</span>
-                    </a>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-white/10">
+                    {selectedProject.github && (
+                      <a
+                        href={selectedProject.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold border border-white/15 transition-all"
+                      >
+                        <Github size={16} />
+                        <span>Source Code</span>
+                      </a>
+                    )}
+                    {selectedProject.liveDemo && (
+                      <a
+                        href={selectedProject.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#4ade80] hover:bg-[#3ec974] text-[#050607] text-xs sm:text-sm font-bold shadow-[0_0_15px_rgba(74,222,128,0.35)] transition-all"
+                      >
+                        <ExternalLink size={16} />
+                        <span>Live Preview</span>
+                      </a>
+                    )}
                   </div>
                 </div>
               </motion.div>
             </div>
           )}
+        </AnimatePresence>
 
-          {/* Call to Action */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-16 text-center"
-          >
-            <div className="card p-8 bg-gradient-to-r from-primary-500 to-blue-600 text-white">
-              <h3 className="text-2xl font-semibold mb-4">Want to see more?</h3>
-              <p className="text-lg opacity-90 mb-6">
-                Kunjungi GitHub saya untuk lebih banyak proyek dan kontribusi sumber terbuka.
-              </p>
-              <a
-                href="https://github.com/bayu3prayitno"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 bg-white text-primary-500 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200"
-              >
-                <Github size={20} />
-                <span>Visit GitHub</span>
-              </a>
-            </div>
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );

@@ -4,11 +4,9 @@ import Navigation from './components/Navigation';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Skills from './components/Skills';
-import Education from './components/Education';
 import Projects from './components/Projects';
 import Activities from './components/Activities';
 import Contact from './components/Contact';
-import Footer from './components/Footer';
 
 function App() {
   return (
@@ -70,12 +68,10 @@ function App() {
           <Home />
           <Profile />
           <Skills />
-          <Education />
           <Projects />
           <Activities />
           <Contact />
         </main>
-        <Footer />
       </div>
     </ThemeProvider>
   );
