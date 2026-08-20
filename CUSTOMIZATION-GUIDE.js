@@ -12,7 +12,7 @@ export const personalData = {
   phone: "+62 857 2504 0030", // Update with your phone number
   bio: "Mahasiswa Teknologi Rekayasa Komputer Politeknik Negeri Semarang dengan minat di bidang Pengembangan Perangkat Lunak, Jaringan, dan Sistem Tertanam. Antusias terhadap teknologi IoT dan AI, serta siap menghadapi tantangan dan proyek inovatif di dunia nyata.", // Update with your bio
   motto: "Belajar tanpa henti, berkembang tanpa batas.", // Update with your personal motto
-  image: "/assets/profile/pp.jpg", // Add your profile photo to public folder
+  image: "/assets/profile/foto.png", // Add your profile photo to public folder
   resume: "/CV_ATS.pdf" // Add your CV PDF to public folder
 };
 

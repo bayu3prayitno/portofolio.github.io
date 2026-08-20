@@ -1,13 +1,13 @@
 // Data portfolio berdasarkan CV
 export const personalData = {
-  name: "Bayu Tri Prayitno", // Akan diupdate berdasarkan CV
-  title: "Mahasiswa Teknologi Rekayasa Komputer", // Akan diupdate berdasarkan CV
+  name: "Bayu Tri Prayitno",
+  title: "Computer Engineering Technology Graduate",
   location: "Indonesia",
   email: "treeprayitno12@gmail.com",
   phone: "+62 857 2504 0030",
-  bio: "Mahasiswa Teknologi Rekayasa Komputer Politeknik Negeri Semarang dengan minat di bidang Pengembangan Perangkat Lunak, Jaringan, dan Sistem Tertanam. Antusias terhadap teknologi IoT dan AI, serta siap menghadapi tantangan dan proyek inovatif di dunia nyata.",
+  bio: "Memiliki fokus dan antusiasme dalam pengembangan aplikasi Web & Mobile, sistem IoT, serta eksplorasi Pengolahan Citra dan AI untuk menciptakan solusi teknologi yang inovatif.",
   motto: "Belajar tanpa henti, berkembang tanpa batas.",
-  image: "/assets/profile/pp.jpg", // Placeholder
+  image: "/assets/profile/foto.png", // Placeholder
   resume: "/CV_ATS.pdf",
 };
 
