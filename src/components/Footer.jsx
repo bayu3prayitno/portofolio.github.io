@@ -1,18 +1,20 @@
 import React from 'react';
-import { ArrowUp, Github, Linkedin, MessageCircle, Mail } from 'lucide-react';
+import { ArrowUp, Github, Linkedin, MessageCircle, Mail, Instagram } from 'lucide-react';
 import { personalData, socialLinks } from '../data/portfolioData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   const quickLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About Me', href: '#profile' },
-    { name: 'Tech Stack', href: '#skills' },
-    { name: 'Education', href: '#education' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Activities', href: '#activities' },
-    { name: 'Contact', href: '#contact' },
+    { name: t?.nav?.home || 'Home', href: '#home' },
+    { name: t?.nav?.profile || 'About Me', href: '#profile' },
+    { name: t?.nav?.skills || 'Tech Stack', href: '#skills' },
+    { name: t?.education?.titleHighlight || 'Education', href: '#education' },
+    { name: t?.nav?.projects || 'Projects', href: '#projects' },
+    { name: t?.nav?.activities || 'Activities', href: '#activities' },
+    { name: t?.nav?.contact || 'Contact', href: '#contact' },
   ];
 
   const scrollToTop = () => {
@@ -39,54 +41,62 @@ const Footer = () => {
             <div className="flex items-center space-x-3">
               <span className="w-2.5 h-2.5 rounded-full bg-[#4ade80] shadow-[0_0_10px_rgba(74,222,128,0.8)]" />
               <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                Bayu Tri Prayitno
+                {personalData.name}
               </h3>
             </div>
             <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-md">
-              Applied Bachelor of Computer Engineering Technology graduate. Passionate about Web Development, IoT, and Artificial Intelligence.
+              {t?.footer?.brandBio || personalData.bio}
             </p>
             <div className="flex items-center space-x-3 pt-2">
-              <a
-                href={socialLinks.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-gray-400 hover:text-emerald-400 transition-all hover:scale-110"
-              >
-                <Github size={18} />
-              </a>
-              <a
-                href={socialLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-gray-400 hover:text-emerald-400 transition-all hover:scale-110"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a
-                href={socialLinks.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-gray-400 hover:text-emerald-400 transition-all hover:scale-110"
-              >
-                <MessageCircle size={18} />
-              </a>
-              <a
-                href={`mailto:${personalData.email}`}
-                aria-label="Email"
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-gray-400 hover:text-emerald-400 transition-all hover:scale-110"
-              >
-                <Mail size={18} />
-              </a>
+              {socialLinks.github && (
+                <a
+                  href={socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                  className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-gray-400 hover:text-emerald-400 transition-all hover:scale-110"
+                >
+                  <Github size={18} />
+                </a>
+              )}
+              {socialLinks.linkedin && (
+                <a
+                  href={socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-gray-400 hover:text-emerald-400 transition-all hover:scale-110"
+                >
+                  <Linkedin size={18} />
+                </a>
+              )}
+              {socialLinks.whatsapp && (
+                <a
+                  href={socialLinks.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
+                  className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-gray-400 hover:text-emerald-400 transition-all hover:scale-110"
+                >
+                  <MessageCircle size={18} />
+                </a>
+              )}
+              {personalData.email && (
+                <a
+                  href={`mailto:${personalData.email}`}
+                  aria-label="Email"
+                  className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-500/15 border border-white/10 hover:border-emerald-400 text-gray-400 hover:text-emerald-400 transition-all hover:scale-110"
+                >
+                  <Mail size={18} />
+                </a>
+              )}
             </div>
           </div>
 
           {/* Quick Nav Links */}
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-              Quick Navigation
+              {t?.footer?.quickLinksTitle || "Quick Navigation"}
             </h4>
             <ul className="space-y-2">
               {quickLinks.map((link, idx) => (
@@ -105,16 +115,18 @@ const Footer = () => {
           {/* Contact Details */}
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400">
-              Direct Contact
+              {t?.footer?.connectTitle || "Direct Contact"}
             </h4>
             <div className="space-y-2 text-sm text-gray-400">
               <p>
                 <span className="text-gray-500 text-xs block">Email</span>
-                <span className="text-gray-300 hover:text-emerald-400 transition-colors">{personalData.email}</span>
+                <a href={`mailto:${personalData.email}`} className="text-gray-300 hover:text-emerald-400 transition-colors">
+                  {personalData.email}
+                </a>
               </p>
               <p>
                 <span className="text-gray-500 text-xs block">Location</span>
-                <span className="text-gray-300">Jawa Tengah, Indonesia</span>
+                <span className="text-gray-300">{personalData.location}</span>
               </p>
             </div>
           </div>
@@ -124,7 +136,7 @@ const Footer = () => {
         {/* Bottom copyright & Scroll To Top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
           <p>
-            © {currentYear} Bayu Tri Prayitno. All rights reserved.
+            © {currentYear} {personalData.name}. {t?.footer?.copyrightText || "All rights reserved."}
           </p>
 
           <button
@@ -141,3 +153,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

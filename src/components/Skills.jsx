@@ -1,7 +1,8 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 import { CyberHeader } from "./CyberText";
+import { techStackList } from "../data/portfolioData";
 
 // High-fidelity Tech & Tool SVG Icons
 const TechIcons = {
@@ -143,29 +144,6 @@ const TechIcons = {
   ),
 };
 
-const techStackList = [
-  { name: "React", icon: TechIcons.React },
-  { name: "Next.js", icon: TechIcons.Nextjs },
-  { name: "JavaScript", icon: TechIcons.JavaScript },
-  { name: "Tailwind", icon: TechIcons.Tailwind },
-  { name: "Node.js", icon: TechIcons.Nodejs },
-  { name: "MySQL", icon: TechIcons.MySQL },
-  { name: "Git", icon: TechIcons.Git },
-  { name: "Python", icon: TechIcons.Python },
-  { name: "Laravel", icon: TechIcons.Laravel },
-  { name: "Firebase", icon: TechIcons.Firebase },
-  { name: "Postman", icon: TechIcons.Postman },
-  { name: "Figma", icon: TechIcons.Figma },
-  { name: "Canva", icon: TechIcons.Canva },
-  { name: "Flutter", icon: TechIcons.Flutter },
-  { name: "VS Code", icon: TechIcons.VSCode },
-  { name: "GitHub", icon: TechIcons.GitHub },
-  { name: "Google Gemini", icon: TechIcons.Gemini },
-  { name: "IoT & Hardware", icon: TechIcons.IoT },
-  { name: "AI & Image Processing", icon: TechIcons.AI },
-  { name: "Antigravity", icon: TechIcons.Antigravity },
-];
-
 const Skills = () => {
   const { t } = useLanguage();
 
@@ -192,10 +170,13 @@ const Skills = () => {
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 sm:gap-4"
         >
           {techStackList.map((item, index) => {
-            const Icon = item.icon;
+            const iconKey = typeof item === 'object' ? item.icon || item.name : item;
+            const itemName = typeof item === 'object' ? item.name : item;
+            const Icon = TechIcons[iconKey] || TechIcons.React;
+            
             return (
               <motion.div
-                key={item.name}
+                key={itemName}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -213,7 +194,7 @@ const Skills = () => {
 
                 {/* Label */}
                 <span className="text-xs sm:text-sm font-medium text-gray-300 group-hover:text-white transition-colors duration-200 text-center tracking-tight truncate w-full">
-                  {item.name}
+                  {itemName}
                 </span>
               </motion.div>
             );
@@ -226,3 +207,4 @@ const Skills = () => {
 };
 
 export default Skills;
+

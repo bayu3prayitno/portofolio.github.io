@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion';
-import { personalData, socialLinks } from '../data/portfolioData';
+import { personalData, socialLinks, heroRoles } from '../data/portfolioData';
 import { useLanguage } from '../contexts/LanguageContext';
 import { DecryptedText, KineticText } from './CyberText';
 import { getAssetPath } from '../utils/assetHelper';
@@ -35,25 +35,19 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-const jobRoles = [
-  "Mobile Development",
-  "Web Development",
-  "IT Support",
-  "IoT Engineer"
-];
-
 const Home = () => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const cardControls = useAnimationControls();
   const { t } = useLanguage();
+  const activeRoles = t?.hero?.roles || heroRoles;
 
   // Role rotator
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentRoleIndex((prevIndex) => (prevIndex + 1) % jobRoles.length);
+      setCurrentRoleIndex((prevIndex) => (prevIndex + 1) % activeRoles.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [activeRoles]);
 
   // Sequence: Drop & Aggressive Damped Pendulum Swing -> Smooth ±0.80° Idle Sway
   useEffect(() => {
@@ -133,7 +127,7 @@ const Home = () => {
             >
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
-                  key={jobRoles[currentRoleIndex]}
+                  key={activeRoles[currentRoleIndex % activeRoles.length]}
                   initial={{ y: 22, opacity: 0, rotateX: 65, filter: "blur(4px)" }}
                   animate={{ y: 0, opacity: 1, rotateX: 0, filter: "blur(0px)" }}
                   exit={{ y: -22, opacity: 0, rotateX: -65, filter: "blur(4px)" }}
@@ -146,8 +140,8 @@ const Home = () => {
                   className="inline-block whitespace-nowrap transform-gpu"
                 >
                   <DecryptedText 
-                    text={jobRoles[currentRoleIndex]} 
-                    triggerKey={jobRoles[currentRoleIndex]}
+                    text={activeRoles[currentRoleIndex % activeRoles.length]} 
+                    triggerKey={activeRoles[currentRoleIndex % activeRoles.length]}
                     speed={25}
                     maxIterations={6}
                   />
