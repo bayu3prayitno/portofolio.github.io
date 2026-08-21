@@ -32,7 +32,7 @@ export const personalData = {
 // Tautan Sosial Media & Kontak Cepat
 export const socialLinks = {
   github: "https://github.com/bayu3prayitno",
-  linkedin: "https://linkedin.com/in/bayu3prayitno",
+  linkedin: "https://www.linkedin.com/in/bayu-tri-prayitno-80bba5277 ",
   whatsapp: "https://wa.me/6285725040030",
   instagram: "https://instagram.com/triprytn",
   email: "mailto:treeprayitno12@gmail.com",
@@ -110,9 +110,9 @@ export const educationList = [
     degree: "Applied Bachelor (D4) — Teknologi Rekayasa Komputer",
     period: "2022 — 2026",
     level: "HIGHER EDUCATION",
-    gpa: "3.74",
+    gpa: "3.82",
     maxGpa: "4.00",
-    honors: "Cum Laude Standing",
+    honors: "-",
     thesis: "Pengembangan Sistem Berbasis IoT, AI & Computer Vision untuk Smart Automation",
     domains: ["IoT & Embedded C++", "Computer Vision & AI", "Full-Stack Web", "Microcontroller Architecture"],
     accentColor: "emerald",
@@ -141,9 +141,9 @@ export const education = educationList;
 export const projects = [
   {
     id: 1,
-    title: "Restaurant App",
+    title: "Psikotes Online",
     category: "Web Application",
-    description: "Aplikasi web pencarian dan rekomendasi restoran interaktif yang dinamis dan responsif.",
+    description: "Aplikasi psikotes online interaktif berbasis AI dan analisis kepribadian, dirancang untuk membantu individu mengenal diri lebih dalam melalui asesmen modern dan terpercaya.",
     technologies: ["HTML", "CSS", "JS"],
     techText: "HTML, CSS, JS",
     image: "/assets/Projects/pbl/1.png",
