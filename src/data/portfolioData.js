@@ -34,7 +34,7 @@ export const socialLinks = {
   github: "https://github.com/bayu3prayitno",
   linkedin: "https://linkedin.com/in/bayu3prayitno",
   whatsapp: "https://wa.me/6285725040030",
-  instagram: "https://instagram.com/bayu3prayitno",
+  instagram: "https://instagram.com/triprytn",
   email: "mailto:treeprayitno12@gmail.com",
 };
 
