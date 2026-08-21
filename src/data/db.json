@@ -225,16 +225,16 @@
     {
       "id": 5,
       "title": {
-        "id": "Dasai Mochi Robot",
-        "en": "Dasai Mochi Robot"
+        "id": "Robot ARM",
+        "en": "Robot ARM"
       },
       "category": {
         "id": "IoT",
         "en": "IoT"
       },
       "description": {
-        "id": "Robot desktop cerdas berbasis ESP32 dengan display ekspresi animasi dan respon sensor interaktif.",
-        "en": "Smart desktop companion robot built on ESP32 featuring expressive animated OLED face reactions and interactive sensor response."
+        "id": "Sistem robotic cerdas berbasis ESP32 dengan display ekspresi animasi dan respon sensor interaktif.",
+        "en": "Smart robotic system built on ESP32 featuring expressive animated OLED face reactions and interactive sensor response."
       },
       "technologies": ["ESP32", "C++", "Hardware Design"],
       "techText": "ESP32, C++",

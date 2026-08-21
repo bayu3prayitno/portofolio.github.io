@@ -1,12 +1,13 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { personalData, socialLinks } from "../data/portfolioData";
+import { personalData, socialLinks, education } from "../data/portfolioData";
 import { useLanguage } from "../contexts/LanguageContext";
 import { DecryptedText, KineticText } from "./CyberText";
 import { getAssetPath } from "../utils/assetHelper";
 
 const Profile = () => {
   const { t } = useLanguage();
+  const primaryEdu = education?.[0] || { gpa: "3.82" };
 
   const scrollTo = (id) => {
     const element = document.getElementById(id);
@@ -145,7 +146,7 @@ const Profile = () => {
                 {/* Stat 1: GPA */}
                 <div className="space-y-1">
                   <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#4ade80] tracking-tight">
-                    3.74
+                    {primaryEdu?.gpa || "3.82"}
                   </div>
                   <AnimatePresence mode="wait">
                     <motion.div
