@@ -327,10 +327,10 @@ const Home = () => {
                     {/* Bottom Text Overlay inside the ID Card */}
                     <div className="absolute bottom-0 inset-x-0 pt-12 pb-5 px-4 bg-gradient-to-t from-[#050706] via-[#050706]/90 to-transparent z-20 flex flex-col items-center text-center">
                       <span className="font-serif text-lg sm:text-xl font-bold tracking-wide text-white leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-                        FullStack
+                        Fresh Graduate
                       </span>
                       <span className="font-serif text-base sm:text-lg font-semibold tracking-normal text-gray-200 leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
-                        Web Developer
+                        Computer Engineering Technology
                       </span>
                     </div>
 
