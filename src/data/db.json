@@ -106,7 +106,7 @@
       "degree": "Applied Bachelor (D4) — Teknologi Rekayasa Komputer",
       "period": "2022 — 2026",
       "level": "HIGHER EDUCATION",
-      "gpa": "3.82",
+      "gpa": "3.84",
       "maxGpa": "4.00",
       "honors": "-",
       "thesis": "Pengembangan Sistem Berbasis IoT, AI & Computer Vision untuk Smart Automation",
@@ -141,22 +141,22 @@
     {
       "id": 1,
       "title": {
-        "id": "Psikotes Online",
-        "en": "Psikotes Online"
+        "id": "Website Institusi",
+        "en": "Official Institutional Website"
       },
       "category": {
         "id": "Web Application",
         "en": "Web Application"
       },
       "description": {
-        "id": "Aplikasi psikotes online interaktif berbasis AI dan analisis kepribadian, dirancang untuk membantu individu mengenal diri lebih dalam melalui asesmen modern dan terpercaya.",
-        "en": "Interactive AI-powered online psychotest and personality assessment application designed to help individuals discover their personal insights through modern, reliable assessments."
+        "id": "Meremajakan website institusi polines.ac.id dengan memigrasikan sistem lama berbasis WordPress ke arsitektur web modern menggunakan Laravel 12 dan Tailwind CSS. Mebangun CMS kustom untuk manajemen konten yang efisien serta mengintegrasikan sistem dengan API Master Data Mahasiswa guna mendukung sinkronisasi data kampus secara aman dan terpusat.",
+        "en": "Revamping the official institutional website polines.ac.id by migrating the old WordPress-based system to a modern web architecture using Laravel 12 and Tailwind CSS. Building a custom CMS for efficient content management and integrating the system with the Student Master Data API to support secure and centralized campus data synchronization."
       },
-      "technologies": ["HTML", "CSS", "JS"],
-      "techText": "HTML, CSS, JS",
-      "image": "/assets/Projects/pbl/1.png",
+      "technologies": ["Laravel 12", "Tailwind CSS", "JS", "MySQL", "API Integration"],
+      "techText": "Laravel 12, Tailwind CSS, JS, MySQL, API Integration",
+      "image": "/assets/Projects/web/web_polines.png",
       "github": "https://github.com/bayu3prayitno",
-      "liveDemo": "https://github.com/bayu3prayitno",
+      "liveDemo": "https://polines.ac.id",
       "featured": true
     },
     {
