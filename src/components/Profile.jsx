@@ -43,12 +43,12 @@ const Profile = () => {
                 {/* Full Background Image */}
                 <div className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-[#0a0d0c]">
                   <img
-                    src={getAssetPath("/assets/profile/foto1.png")}
+                    src={getAssetPath("/assets/profile/foto1.webp")}
                     alt={personalData.name}
                     className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = getAssetPath(personalData.image || "/assets/profile/foto.png");
+                      e.target.src = getAssetPath(personalData.image || "/assets/profile/foto.webp");
                     }}
                   />
                   {/* Top Vignette Gradient for Text Readability */}
@@ -75,12 +75,12 @@ const Profile = () => {
                     {/* Small User Avatar */}
                     <div className="w-8 h-8 rounded-full overflow-hidden border border-white/30 bg-gray-800 flex-shrink-0 shadow-sm">
                       <img 
-                        src={getAssetPath("/assets/profile/foto1.png")} 
+                        src={getAssetPath("/assets/profile/foto1.webp")} 
                         alt="Avatar" 
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src = getAssetPath(personalData.image || "/assets/profile/foto.png");
+                          e.target.src = getAssetPath(personalData.image || "/assets/profile/foto.webp");
                         }}
                       />
                     </div>

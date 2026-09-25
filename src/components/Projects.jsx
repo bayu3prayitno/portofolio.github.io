@@ -75,6 +75,7 @@ const Projects = () => {
                 <img
                   src={getAssetPath(project.image)}
                   alt={project.title}
+                  loading="lazy"
                   className="w-full h-full object-cover object-top filter grayscale contrast-105 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-105 transition-all duration-500"
                   onError={(e) => {
                     e.target.onerror = null;
