@@ -10,8 +10,8 @@
       "en": "A disciplined, responsible, and open-minded Applied Bachelor of Computer Engineering Technology graduate from Politeknik Negeri Semarang with practical experience in Web Development, IoT, and AI."
     },
     "motto": "Belajar tanpa henti, berkembang tanpa batas.",
-    "image": "/assets/profile/foto.png",
-    "profileCardImage": "/assets/profile/foto1.png",
+    "image": "/assets/profile/foto.webp",
+    "profileCardImage": "/assets/profile/foto1.webp",
     "resume": "/CV_ATS.pdf"
   },
   "socials": {
@@ -154,7 +154,7 @@
       },
       "technologies": ["Laravel 12", "Tailwind CSS", "JS", "MySQL", "API Integration"],
       "techText": "Laravel 12, Tailwind CSS, JS, MySQL, API Integration",
-      "image": "/assets/Projects/web/web_polines.png",
+      "image": "/assets/Projects/web/web_polines.webp",
       "github": "https://github.com/bayu3prayitno",
       "liveDemo": "https://polines.ac.id",
       "featured": true
@@ -175,7 +175,7 @@
       },
       "technologies": ["React", "Vite", "Tailwind"],
       "techText": "React, Tailwind, Vite",
-      "image": "/assets/Projects/pbl/2.png",
+      "image": "/assets/Projects/pbl/2.webp",
       "github": "https://github.com/bayu3prayitno",
       "liveDemo": "https://github.com/bayu3prayitno",
       "featured": true
@@ -196,7 +196,7 @@
       },
       "technologies": ["Python", "Computer Vision", "OpenCV"],
       "techText": "Python, Computer Vision",
-      "image": "/assets/Projects/pbl/3.png",
+      "image": "/assets/Projects/pbl/3.webp",
       "github": "https://github.com/bayu3prayitno",
       "liveDemo": "https://github.com/bayu3prayitno",
       "featured": true
@@ -217,7 +217,7 @@
       },
       "technologies": ["HTML", "CSS", "JS", "C++", "ESP32"],
       "techText": "HTML, CSS, JS, C++, ESP32",
-      "image": "/assets/Projects/pbl/4.png",
+      "image": "/assets/Projects/pbl/4.webp",
       "github": "https://github.com/bayu3prayitno",
       "liveDemo": "https://github.com/bayu3prayitno",
       "featured": true
@@ -238,7 +238,7 @@
       },
       "technologies": ["ESP32", "C++", "Hardware Design"],
       "techText": "ESP32, C++",
-      "image": "/assets/Projects/mobile/4.jpg",
+      "image": "/assets/Projects/mobile/4.webp",
       "github": "https://github.com/bayu3prayitno",
       "liveDemo": "https://github.com/bayu3prayitno",
       "featured": true
@@ -259,7 +259,7 @@
       },
       "technologies": ["Java", "ESP8266", "IoT Sensor"],
       "techText": "Java Console App, IoT",
-      "image": "/assets/Projects/mobile/1.png",
+      "image": "/assets/Projects/mobile/1.webp",
       "github": "https://github.com/bayu3prayitno",
       "liveDemo": "https://github.com/bayu3prayitno",
       "featured": true
@@ -280,7 +280,7 @@
       },
       "technologies": ["Laravel", "HTML", "CSS", "JS"],
       "techText": "Laravel, HTML, CSS, JS",
-      "image": "/assets/Projects/pbl/5.png",
+      "image": "/assets/Projects/pbl/5.webp",
       "github": "https://github.com/bayu3prayitno",
       "liveDemo": "https://github.com/bayu3prayitno",
       "featured": true
@@ -301,7 +301,7 @@
       },
       "technologies": ["Laravel", "HTML", "CSS", "JS", "Filament"],
       "techText": "Laravel, HTML, CSS, JS",
-      "image": "/assets/Projects/mobile/5.png",
+      "image": "/assets/Projects/mobile/5.webp",
       "github": "https://github.com/bayu3prayitno",
       "liveDemo": "https://github.com/bayu3prayitno",
       "featured": true
@@ -323,7 +323,7 @@
         "id": "Menjadi panitia dalam acara tahunan TECHCOMFEST 2025 sebagai Sie Publikasi, Dokumentasi, dan Dekorasi.",
         "en": "Served as organizing committee for TECHCOMFEST 2025 in the Publication, Documentation, and Event Decoration division."
       },
-      "image": "/assets/kegiatan/TECHCOMFEST2025.jpg",
+      "image": "/assets/kegiatan/TECHCOMFEST2025.webp",
       "certificate": "/assets/doc/TECHCOMFEST2025.pdf"
     },
     {
@@ -341,7 +341,7 @@
         "id": "Mengikuti pelatihan online intensif Web Development Bootcamp | Python Django Web Course oleh Udemy.",
         "en": "Completed intensive technical training on Python Django Full-Stack Web Development hosted by Udemy."
       },
-      "image": "/assets/kegiatan/udemy.png",
+      "image": "/assets/kegiatan/udemy.webp",
       "certificate": "/assets/doc/Dev-Python-Django.pdf"
     },
     {
@@ -359,7 +359,7 @@
         "id": "Aktif dalam organisasi pelajar IPNU di tingkat ranting sebagai Sekretaris, mengelola tata kelola administrasi.",
         "en": "Actively served as General Secretary in the IPNU student organization at the branch level, managing administrative workflows."
       },
-      "image": "/assets/kegiatan/ipnu.jpg",
+      "image": "/assets/kegiatan/ipnu.webp",
       "certificate": null
     },
     {
@@ -377,7 +377,7 @@
         "id": "Publikasi jurnal ilmiah tentang sistem monitoring kualitas udara ruangan berbasis IoT menggunakan sensor MQ135 dan DHT11.",
         "en": "Published scientific paper on developing an IoT-based indoor air quality monitoring system using MQ135 and DHT11 sensors."
       },
-      "image": "/assets/kegiatan/jurnal.png",
+      "image": "/assets/kegiatan/jurnal.webp",
       "certificate": null
     }
   ],

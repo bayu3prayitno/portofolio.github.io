@@ -315,7 +315,7 @@ const Home = () => {
                     {/* Profile / Character Image */}
                     <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
                       <img
-                        src={getAssetPath(personalData.image || "/assets/profile/foto.png")}
+                        src={getAssetPath(personalData.image || "/assets/profile/foto.webp")}
                         alt={personalData.name || "Full Stack Developer"}
                         className="w-full h-full object-cover object-top select-none pointer-events-none filter brightness-95 contrast-105"
                         onError={(e) => {
